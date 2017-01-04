@@ -5,9 +5,63 @@
     xmlns:local="using:XamlToolkitChartDemo"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <charting:Chart
+                x:Name="AreaChartWithNoLabels"
+                Margin="70,0">
+            <charting:Chart.LegendStyle>
+                <Style
+                        TargetType="datavis:Legend">
+                    <Setter
+                            Property="Width"
+                            Value="0"/>
+                </Style>
+            </charting:Chart.LegendStyle>
+            <charting:AreaSeries
+                    Title="Energy"
+                    ItemsSource="{Binding Items}"
+                    IndependentValueBinding="{Binding Key}"
+                    DependentValueBinding="{Binding Value}"
+                    IsSelectionEnabled="True">
+                <charting:AreaSeries.IndependentAxis>
+                    <charting:DateTimeAxis Orientation="X" Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" Height="0"></charting:DateTimeAxis>
+                </charting:AreaSeries.IndependentAxis>
+                <charting:AreaSeries.DependentRangeAxis>
+                    <charting:LinearAxis Orientation="Y" ShowGridLines="True"></charting:LinearAxis>
+                </charting:AreaSeries.DependentRangeAxis>
+                <charting:AreaSeries.DataPointStyle>
+                    <Style
+                            TargetType="charting:AreaDataPoint">
+                        <Setter
+                                Property="BorderThickness"
+                                Value="0" />
+                        <Setter
+                                Property="IsTabStop"
+                                Value="False" />
+                        <Setter
+                                Property="Width"
+                                Value="0" />
+                        <Setter
+                                Property="Height"
+                                Value="0" />
+                        <Setter
+                                Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate
+                                        TargetType="charting:AreaDataPoint">
+                                    <Grid
+                                            x:Name="Root"
+                                            Opacity="0" />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </charting:AreaSeries.DataPointStyle>
+            </charting:AreaSeries>
+        </charting:Chart>
     </Grid>
 </Page>
